@@ -112,6 +112,8 @@ function newPair() {
 }
 
 //-------------------------------------
+function activateInputs(){
+
 
 $(document).ready(function() {
   $('form:first *:input:enabled:first').focus();
@@ -125,8 +127,8 @@ $("input").bind("input", function() {
         $this.nextAll("input:enabled").first().focus();
       }
   },0);
-});
-
+});}
+activateInputs();
 var j;
 var selectedLetters;
 var difficultyLevel;
@@ -151,7 +153,6 @@ function showLetters(){
       difficultyLevel = 0.10;
     }
     
-    //If difficulty easy then difficultyLevel = 0.70...
     var randomLength = Math.round(word.length*difficultyLevel);
     
     while(selectedLetters.length < randomLength){
@@ -182,6 +183,22 @@ function readAnswer(){
       }
       if(word==answeredWord){
         alert("Right answer! :)");
+
+        var inputs = document.getElementsByTagName('input');
+        while (inputs.length) inputs[0].parentNode.removeChild(inputs[0]);
+
+        results = newPair();
+        duplicates = [];
+
+        document.getElementById("gamepicture").src = results[0];
+
+        word = results[1];
+        letters=[];
+        randomLetters=[];
+
+        result();
+        activateInputs();
+        readAnswer();
       }
       else{
         alert("Wrong answer.. :(");
