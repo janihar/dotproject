@@ -22,7 +22,7 @@ function result() {
     let guess = document.createElement("input");
     guess.setAttribute("class", "guess");
     guess.setAttribute("maxLength",1);
-    guess.style.width = '30px';
+    guess.style.width = '35px';
     guess.setAttribute("id",i);
     
     if(i==randomLetters[i])
