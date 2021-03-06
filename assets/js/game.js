@@ -137,7 +137,20 @@ function showLetters(){
   for (var i = 0; i < word.length; i++) {
     letters.push(word.charAt(i));
     
-    difficultyLevel = 0.70;
+    
+    if(getParams() == "easy"){
+      difficultyLevel = 0.70;
+    }
+    else if(getParams() == "intermediate"){
+      difficultyLevel = 0.50;
+    }
+    else if(getParams() == "hard"){
+      difficultyLevel = 0.25;
+    }
+    else if(getParams() == "advanced"){
+      difficultyLevel = 0.10;
+    }
+    
     //If difficulty easy then difficultyLevel = 0.70...
     var randomLength = Math.round(word.length*difficultyLevel);
     
