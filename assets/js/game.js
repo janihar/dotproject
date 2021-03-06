@@ -23,7 +23,7 @@ function result() {
     guess.setAttribute("class", "guess");
     guess.setAttribute("maxLength",1);
     guess.style.width = '30px';
-    
+    guess.setAttribute("id",i);
     
     if(i==randomLetters[i])
     {
@@ -110,33 +110,70 @@ function newPair() {
 
   return pair;
 }
+
+//-------------------------------------
+
+$(document).ready(function() {
+  $('form:first *:input:enabled:first').focus();
+});
+
 $("input").bind("input", function() {
   var $this = $(this);
   setTimeout(function() {
       if ( $this.val().length >= parseInt($this.attr("maxlength"),10) )
       {
-        $this.next("input").focus();
-      }
-      if($this.val()){
-        
+        $this.nextAll("input:enabled").first().focus();
       }
   },0);
 });
 
-//---------------------------
+var j;
+var selectedLetters;
+var difficultyLevel;
+
 function showLetters(){
+  j=0;
+  selectedLetters=[];
   for (var i = 0; i < word.length; i++) {
     letters.push(word.charAt(i));
-
-    randomLetters.push(Math.floor(Math.random() * (word.length - 1 + 1)) + 1);
-    /*if(i == 2 || i == 4 || i == 5){
+    
+    difficultyLevel = 0.70;
+    //If difficulty easy then difficultyLevel = 0.70...
+    var randomLength = Math.round(word.length*difficultyLevel);
+    
+    while(selectedLetters.length < randomLength){
+      var r = Math.floor(Math.random() * word.length);
+      if(selectedLetters.indexOf(r) === -1) selectedLetters.push(r);
+    }
+    selectedLetters.sort();
+    
+    if(i == selectedLetters[j]){
       randomLetters.push(i);
+      j++;
     }
     else{
-      randomLetters.push("");
-    }*/
-    //randomLetters.push(Math.floor(Math.random() * word.length-1));
+      randomLetters.push("-");
+    }
   }
   //alert(randomLetters);
 }
 
+var answeredWord;
+function readAnswer(){
+  
+  $("input").on("keydown",function search(e) {
+    if(e.keyCode == 13) {
+      answeredWord="";
+      for(var i = 0;i<word.length;i++){
+        answeredWord=answeredWord+document.getElementById(i).value;
+      }
+      if(word==answeredWord){
+        alert("Right answer! :)");
+      }
+      else{
+        alert("Wrong answer.. :(");
+      }
+  }
+});
+}
+readAnswer();
