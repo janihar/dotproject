@@ -183,27 +183,30 @@ function readAnswer(){
       }
       if(word==answeredWord){
         alert("Right answer! :)");
-
-        var inputs = document.getElementsByTagName('input');
-        while (inputs.length) inputs[0].parentNode.removeChild(inputs[0]);
-
-        results = newPair();
-        duplicates = [];
-
-        document.getElementById("gamepicture").src = results[0];
-
-        word = results[1];
-        letters=[];
-        randomLetters=[];
-
-        result();
-        activateInputs();
-        readAnswer();
+        nextQuestion();
       }
       else{
         alert("Wrong answer.. :(");
+        nextQuestion();
       }
   }
 });
 }
 readAnswer();
+function nextQuestion(){
+  var inputs = document.getElementsByTagName('input');
+  while (inputs.length) inputs[0].parentNode.removeChild(inputs[0]);
+
+  results = newPair();
+  duplicates = [];
+
+  document.getElementById("gamepicture").src = results[0];
+
+  word = results[1];
+  letters=[];
+  randomLetters=[];
+
+  result();
+  activateInputs();
+  readAnswer();
+}
