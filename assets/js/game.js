@@ -33,7 +33,7 @@ function result() {
     
     if (word[i] === "-") {
       guess.innerHTML = "-";
-      space = 1;
+      //space = 1;
     } else {
       guess.innerHTML = "_";
     }
@@ -137,6 +137,6 @@ function showLetters(){
     }*/
     //randomLetters.push(Math.floor(Math.random() * word.length-1));
   }
-  alert(randomLetters);
+  //alert(randomLetters);
 }
 

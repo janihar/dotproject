@@ -7,10 +7,6 @@ export var dataset = {
             "word": "chimpanzee"
             },
             {
-            "picture": "images/advanced/animals/cormorant.png",
-            "word": "cormorant"
-            },
-            {
             "picture": "images/advanced/animals/coyote.PNG",
             "word": "coyote"
             },
