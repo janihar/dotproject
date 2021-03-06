@@ -93,33 +93,33 @@ export var dataset = {
             "word": "toiletpaper"
             }
         ],
-        "medium": [
+        "intermediate": [
             {
-            "picture": "images/medium/vegetables/artichoke.PNG",
+            "picture": "images/intermediate/vegetables/artichoke.PNG",
             "word": "artichoke"
             },
             {
-            "picture": "images/medium/vegetables/mushrooms.PNG",
+            "picture": "images/intermediate/vegetables/mushrooms.PNG",
             "word": "mushrooms"
             },
             {
-            "picture": "images/medium/vegetables/pepper.PNG",
+            "picture": "images/intermediate/vegetables/pepper.PNG",
             "word": "pepper"
             },
             {
-            "picture": "images/medium/vegetables/potato.PNG",
+            "picture": "images/intermediate/vegetables/potato.PNG",
             "word": "potato"
             },
             {
-            "picture": "images/medium/vegetables/radishes.PNG",
+            "picture": "images/intermediate/vegetables/radishes.PNG",
             "word": "radishes"
             },
             {
-            "picture": "images/medium/vegetables/tomato.PNG",
+            "picture": "images/intermediate/vegetables/tomato.PNG",
             "word": "tomato"
             },
             {
-            "picture": "images/medium/vegetables/turnip.PNG",
+            "picture": "images/intermediate/vegetables/turnip.PNG",
             "word": "turnip"
             }
         ],
