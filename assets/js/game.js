@@ -7,24 +7,36 @@ let duplicates = [];
 document.getElementById("gamepicture").src = results[0];
 
 let word = results[1];
+var letters=[];
+var randomLetters=[];
 
-result()
+result();
 
 function result() {
   let wordHolder = document.getElementById("hold");
   let correct = document.createElement("li");
-
+  showLetters();
   for (var i = 0; i < word.length; i++) {
+    
     correct.setAttribute("id", "my-word");
     let guess = document.createElement("input");
     guess.setAttribute("class", "guess");
+    guess.setAttribute("maxLength",1);
+    guess.style.width = '30px';
+    
+    
+    if(i==randomLetters[i])
+    {
+      guess.setAttribute("value",letters[i]);
+      guess.setAttribute("disabled","");
+    }
+    
     if (word[i] === "-") {
       guess.innerHTML = "-";
       space = 1;
     } else {
       guess.innerHTML = "_";
     }
-
     wordHolder.appendChild(correct);
     correct.appendChild(guess);
   }
@@ -98,3 +110,33 @@ function newPair() {
 
   return pair;
 }
+$("input").bind("input", function() {
+  var $this = $(this);
+  setTimeout(function() {
+      if ( $this.val().length >= parseInt($this.attr("maxlength"),10) )
+      {
+        $this.next("input").focus();
+      }
+      if($this.val()){
+        
+      }
+  },0);
+});
+
+//---------------------------
+function showLetters(){
+  for (var i = 0; i < word.length; i++) {
+    letters.push(word.charAt(i));
+
+    randomLetters.push(Math.floor(Math.random() * (word.length - 1 + 1)) + 1);
+    /*if(i == 2 || i == 4 || i == 5){
+      randomLetters.push(i);
+    }
+    else{
+      randomLetters.push("");
+    }*/
+    //randomLetters.push(Math.floor(Math.random() * word.length-1));
+  }
+  alert(randomLetters);
+}
+
