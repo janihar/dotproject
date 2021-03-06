@@ -10,10 +10,16 @@ input {
 li {
   list-style-type: none;
   display: block;
+  float: left;
+  white-space: nowrap;
 }
-
 
 li input {
   padding: 10px;
   margin-bottom: 5px;
+}
+
+
+#hold {
+  display: flex; flex-direction: row; justify-content: center
 }
