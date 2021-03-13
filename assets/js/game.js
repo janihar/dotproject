@@ -183,7 +183,7 @@ function showLetters(){
 var answeredWord;
 var score=0;
 var attempt=0;
-
+var RightOrWrongArnswer;
 function readAnswer(){
   answeredQuestions++;
 
@@ -198,20 +198,20 @@ function readAnswer(){
         answeredWord=answeredWord+document.getElementById(i).value;
       }
       if(word==answeredWord){
-        //alert("Right answer! :)");
         document.getElementById("counter").innerHTML = answeredQuestions + "/10";
-        answers.push(true)
-        alert("Right answer! :)");
-        nextQuestion();
+        answers.push(true);
+        RightOrWrongArnswer = true;
+        rightOrWrong(RightOrWrongArnswer);
+        setTimeout(function () { nextQuestion();}, 1500);
         score+=1;
         attempt+=1;
       }
       else{
-        //alert("Wrong answer.. :(");
         document.getElementById("counter").innerHTML = answeredQuestions + "/10";
-        answers.push(false)
-        alert("Wrong answer.. :(");
-        nextQuestion();
+        answers.push(false);
+        RightOrWrongArnswer = false;
+        rightOrWrong(RightOrWrongArnswer,word);
+        setTimeout(function () { nextQuestion();}, 2000);
         attempt+=1;
       }
       if(attempt == 10){
@@ -242,6 +242,27 @@ function nextQuestion(){
   readAnswer();
 }
 
-function endGame() {
-  console.log(answers)
+function rightOrWrong(RightOrWrongArnswer,word){
+  var message = document.createElement("P");
+  var timeOut = 0;
+  if(RightOrWrongArnswer==true){
+    message.innerText = "Right answer!";
+    message.style.color = "green";
+    message.style.fontWeight = "bold";
+    message.style.fontFamily = "";
+    timeOut = 1500;
+  }
+  else if(RightOrWrongArnswer==false){
+    message.innerText = "Wrong answer! \n Right answer is: "+ word;
+    message.style.color = "red";
+    message.style.fontWeight = "bold";
+    timeOut = 2000;
+  } 
+
+  let wordHolder = document.getElementById("hold");
+  let correct = document.createElement("li");
+  wordHolder.innerHTML = "";
+  wordHolder.appendChild(correct);
+  correct.appendChild(message);
+  setTimeout(function () { message.remove()}, timeOut);
 }
