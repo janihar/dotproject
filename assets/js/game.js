@@ -1,4 +1,6 @@
 import { dataset } from "../data/dataset.js";
+import { getCategory } from "./functions/functions.js"
+import { getParams } from "./functions/functions.js"
 
 let results = newPair();
 //To ensure that player doesnt answer same question twice
@@ -7,8 +9,8 @@ let duplicates = [];
 document.getElementById("gamepicture").src = results[0];
 
 let word = results[1];
-var letters=[];
-var randomLetters=[];
+var letters = [];
+var randomLetters = [];
 
 //To track how many question user has been answered. Default 1
 var answeredQuestions = 1;
@@ -30,20 +32,18 @@ function result() {
   let correct = document.createElement("li");
   showLetters();
   for (var i = 0; i < word.length; i++) {
-    
     correct.setAttribute("id", "my-word");
     let guess = document.createElement("input");
     guess.setAttribute("class", "guess");
-    guess.setAttribute("maxLength",1);
-    guess.style.width = '35px';
-    guess.setAttribute("id",i);
-    
-    if(i==randomLetters[i])
-    {
-      guess.setAttribute("value",letters[i]);
-      guess.setAttribute("disabled","");
+    guess.setAttribute("maxLength", 1);
+    guess.style.width = "35px";
+    guess.setAttribute("id", i);
+
+    if (i == randomLetters[i]) {
+      guess.setAttribute("value", letters[i]);
+      guess.setAttribute("disabled", "");
     }
-    
+
     if (word[i] === "-") {
       guess.innerHTML = "-";
       //space = 1;
@@ -57,128 +57,76 @@ function result() {
 
 /**
  *
- * @returns gamemode easy, intermediate, hard or advanced
- */
-function getParams() {
-  var nameVal;
-  var idx = document.URL.indexOf("?");
-  var params = new Array();
-  if (idx != -1) {
-    var pairs = document.URL.substring(idx + 1, document.URL.length).split("&");
-    for (var i = 0; i < pairs.length; i++) {
-      nameVal = pairs[i].split("=");
-    }
-  }
-  return nameVal[1];
-}
-
-/**
- * 
  * @returns new picture and word as [] -> [0] = picture and [1] = word
  */
 function newPair() {
-  let gameDifficult = getParams();
+  let gameDifficult = getParams()[0];
+  let gameCategory = getParams()[1]
   let datasetLength;
   let randomData;
   let image;
   let word;
   let pair = [];
 
-  switch (gameDifficult) {
-    case "easy":
-      datasetLength = dataset.data.easy.length;
-      randomData = Math.floor(Math.random() * (datasetLength - 1 - 1 + 1)) + 1;
-      image = dataset.data.easy[randomData].picture;
-      word = dataset.data.easy[randomData].word;
-      pair.push(image);
-      pair.push(word);
-      break;
-    case "intermediate":
-      datasetLength = dataset.data.intermediate.length;
-      randomData = Math.floor(Math.random() * (datasetLength - 1 - 1 + 1)) + 1;
-      image = dataset.data.intermediate[randomData].picture;
-      word = dataset.data.intermediate[randomData].word;
-      pair.push(image);
-      pair.push(word);
-      break;
-    case "hard":
-      datasetLength = dataset.data.hard.length;
-      randomData = Math.floor(Math.random() * (datasetLength - 1 - 1 + 1)) + 1;
-      image = dataset.data.hard[randomData].picture;
-      word = dataset.data.hard[randomData].word;
-      pair.push(image);
-      pair.push(word);
-      break;
-    case "advanced":
-      datasetLength = dataset.data.advanced.length;
-      randomData = Math.floor(Math.random() * (datasetLength - 1 - 1 + 1)) + 1;
-      image = dataset.data.advanced[randomData].picture;
-      word = dataset.data.advanced[randomData].word;
-      pair.push(image);
-      pair.push(word);
-      break;
-    default:
-      console.log("Parameter error");
-  }
+  console.log(dataset.data[gameDifficult][getCategory(dataset.data[gameDifficult], gameCategory)]);
+  datasetLength = dataset.data[gameDifficult][getCategory(dataset.data[gameDifficult], gameCategory)].questions.length;
+  randomData = Math.floor(Math.random() * (datasetLength - 1 - 1 + 1)) + 1;
+  image = dataset.data[gameDifficult][getCategory(dataset.data[gameDifficult], gameCategory)].questions[randomData].picture
+  word = dataset.data[gameDifficult][getCategory(dataset.data[gameDifficult], gameCategory)].questions[randomData].word
+  pair.push(image)
+  pair.push(word)
 
   return pair;
 }
 
 //-------------------------------------
-function activateInputs(){
+function activateInputs() {
+  $(document).ready(function () {
+    $("form:first *:input:enabled:first").focus();
+  });
 
-
-$(document).ready(function() {
-  $('form:first *:input:enabled:first').focus();
-});
-
-$("input").bind("input", function() {
-  var $this = $(this);
-  setTimeout(function() {
-      if ( $this.val().length >= parseInt($this.attr("maxlength"),10) )
-      {
+  $("input").bind("input", function () {
+    var $this = $(this);
+    setTimeout(function () {
+      if ($this.val().length >= parseInt($this.attr("maxlength"), 10)) {
         $this.nextAll("input:enabled").first().focus();
       }
-  },0);
-});}
+    }, 0);
+  });
+}
 activateInputs();
 var j;
 var selectedLetters;
 var difficultyLevel;
 
-function showLetters(){
-  j=0;
-  selectedLetters=[];
+function showLetters() {
+  j = 0;
+  selectedLetters = [];
   for (var i = 0; i < word.length; i++) {
     letters.push(word.charAt(i));
-    
-    
-    if(getParams() == "easy"){
-      difficultyLevel = 0.70;
-    }
-    else if(getParams() == "intermediate"){
-      difficultyLevel = 0.50;
-    }
-    else if(getParams() == "hard"){
+
+    if (getParams()[0] == "easy") {
+      difficultyLevel = 0.7;
+    } else if (getParams()[0] == "intermediate") {
+      difficultyLevel = 0.5;
+    } else if (getParams()[0] == "hard") {
       difficultyLevel = 0.25;
+    } else if (getParams()[0] == "advanced") {
+      difficultyLevel = 0.1;
     }
-    else if(getParams() == "advanced"){
-      difficultyLevel = 0.10;
-    }
-    
-    var randomLength = Math.round(word.length*difficultyLevel);
-    
-    while(selectedLetters.length < randomLength){
+
+    var randomLength = Math.round(word.length * difficultyLevel);
+
+    while (selectedLetters.length < randomLength) {
       var r = Math.floor(Math.random() * word.length);
-      if(selectedLetters.indexOf(r) === -1) selectedLetters.push(r);
+      if (selectedLetters.indexOf(r) === -1) selectedLetters.push(r);
     }
     selectedLetters.sort();
-    
-    if(i == selectedLetters[j]){
+
+    if (i == selectedLetters[j]) {
       randomLetters.push(i);
       j++;
-    }
-    else{
+    } else {
       randomLetters.push("-");
     }
   }
@@ -199,11 +147,11 @@ function readAnswer(){
     endGame();
   }
 
-  $("input").on("keydown",function search(e) {
-    if(e.keyCode == 13) {
-      answeredWord="";
-      for(var i = 0;i<word.length;i++){
-        answeredWord=answeredWord+document.getElementById(i).value;
+  $("input").on("keydown", function search(e) {
+    if (e.keyCode == 13) {
+      answeredWord = "";
+      for (var i = 0; i < word.length; i++) {
+        answeredWord = answeredWord + document.getElementById(i).value;
       }
       if(word==answeredWord){
         document.getElementById("counter").innerHTML = answeredQuestions + "/10";
@@ -231,8 +179,8 @@ function readAnswer(){
         setTimeout(function () { nextQuestion();}, 2000);
         attempt+=1;
       }
-      if(attempt == 10){
-        alert("Nice work! You got "+score+"/"+attempt+" points!");
+      if (attempt == 10) {
+        alert("Nice work! You got " + score + "/" + attempt + " points!");
         score = 0;
         attempt = 0;
       }
@@ -253,8 +201,8 @@ function nextQuestion(){
   document.getElementById("gamepicture").src = results[0];
 
   word = results[1];
-  letters=[];
-  randomLetters=[];
+  letters = [];
+  randomLetters = [];
 
   result();
   activateInputs();

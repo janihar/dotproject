@@ -7,7 +7,7 @@ input {
   margin-left: 10px;
 }
 
-li {
+#my-word {
   list-style-type: none;
   display: block;
   float: left;
@@ -27,4 +27,18 @@ li input {
 
 #counter {
   text-align: center;
+}
+
+#gameitem {
+  list-style-type: none !important;
+  display: block !important;
+  padding-right: 0.6em !important;
+  margin: 30px !important;
+} 
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
 }
