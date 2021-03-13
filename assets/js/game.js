@@ -10,6 +10,14 @@ let word = results[1];
 var letters=[];
 var randomLetters=[];
 
+//To track how many question user has been answered. Default 1
+var answeredQuestions = 1;
+const maxQuestions = 10;
+
+//To track how many answers were correct or wrong
+
+let answers = []
+
 result();
 
 function result() {
@@ -177,7 +185,12 @@ var score=0;
 var attempt=0;
 
 function readAnswer(){
-  
+  answeredQuestions++;
+
+  if (answeredQuestions === maxQuestions) {
+    endGame()
+  }
+
   $("input").on("keydown",function search(e) {
     if(e.keyCode == 13) {
       answeredWord="";
@@ -186,12 +199,18 @@ function readAnswer(){
       }
       if(word==answeredWord){
         //alert("Right answer! :)");
+        document.getElementById("counter").innerHTML = answeredQuestions + "/10";
+        answers.push(true)
+        alert("Right answer! :)");
         nextQuestion();
         score+=1;
         attempt+=1;
       }
       else{
         //alert("Wrong answer.. :(");
+        document.getElementById("counter").innerHTML = answeredQuestions + "/10";
+        answers.push(false)
+        alert("Wrong answer.. :(");
         nextQuestion();
         attempt+=1;
       }
@@ -221,4 +240,8 @@ function nextQuestion(){
   result();
   activateInputs();
   readAnswer();
+}
+
+function endGame() {
+  console.log(answers)
 }

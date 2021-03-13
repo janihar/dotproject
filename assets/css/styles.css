@@ -19,7 +19,12 @@ li input {
   margin-bottom: 5px;
 }
 
-
 #hold {
-  display: flex; flex-direction: row; justify-content: center
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+#counter {
+  text-align: center;
 }
