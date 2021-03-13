@@ -16,7 +16,12 @@ const maxQuestions = 10;
 
 //To track how many answers were correct or wrong
 
-let answers = []
+let answers = [];
+
+//-------------
+let answeredWords = [];
+let correctWords = [];
+let times = [];
 
 result();
 
@@ -184,11 +189,14 @@ var answeredWord;
 var score=0;
 var attempt=0;
 var RightOrWrongArnswer;
+var t0 = performance.now();
+var t1;
 function readAnswer(){
   answeredQuestions++;
 
   if (answeredQuestions === maxQuestions) {
-    endGame()
+    learningAnalytics();
+    endGame();
   }
 
   $("input").on("keydown",function search(e) {
@@ -202,15 +210,24 @@ function readAnswer(){
         answers.push(true);
         RightOrWrongArnswer = true;
         rightOrWrong(RightOrWrongArnswer);
+        
+        answeredWords.push(answeredWord);
+        correctWords.push(word);
+        t1 = performance.now();
         setTimeout(function () { nextQuestion();}, 1500);
         score+=1;
         attempt+=1;
+        
       }
       else{
         document.getElementById("counter").innerHTML = answeredQuestions + "/10";
         answers.push(false);
         RightOrWrongArnswer = false;
         rightOrWrong(RightOrWrongArnswer,word);
+
+        answeredWords.push(answeredWord);
+        correctWords.push(word);
+        t1 = performance.now();
         setTimeout(function () { nextQuestion();}, 2000);
         attempt+=1;
       }
@@ -219,12 +236,14 @@ function readAnswer(){
         score = 0;
         attempt = 0;
       }
+      
   }
 });
 }
 
 readAnswer();
 function nextQuestion(){
+  timing();
   var inputs = document.getElementsByTagName('input');
   while (inputs.length) inputs[0].parentNode.removeChild(inputs[0]);
 
@@ -249,7 +268,6 @@ function rightOrWrong(RightOrWrongArnswer,word){
     message.innerText = "Right answer!";
     message.style.color = "green";
     message.style.fontWeight = "bold";
-    message.style.fontFamily = "";
     timeOut = 1500;
   }
   else if(RightOrWrongArnswer==false){
@@ -265,4 +283,42 @@ function rightOrWrong(RightOrWrongArnswer,word){
   wordHolder.appendChild(correct);
   correct.appendChild(message);
   setTimeout(function () { message.remove()}, timeOut);
+}
+
+function learningAnalytics(){
+  var ul = document.createElement("ul");
+  var li = document.createElement("li");
+  ul.innerText = "Right answers:";
+  li.innerText = "test";
+  let wordHolder = document.getElementById("hold");
+  let correct = document.createElement("li");
+  wordHolder.innerHTML = "";
+  correct.innerHTML = "";
+  wordHolder.appendChild(correct);
+  /*correct.appendChild(ul);
+  correct.appendChild(li);*/
+
+  var testing = ['test1','test2','test3'];
+  var ul=document.createElement('UL');
+    for(var i=0;i<testing.length;i++)
+    {
+      var li=document.createElement('LI');
+      li.appendChild(document.createTextNode(answeredWords[i]));
+      li.appendChild(document.createTextNode(correctWords[i]));
+      li.appendChild(document.createTextNode(times[i]));
+      ul.appendChild(li);
+    }
+    correct.appendChild(ul);
+}
+
+function timing(){
+  var time = t1-t0;
+  var seconds = Math.floor(time/1000);
+  var hundreds = time/1000-seconds;
+  hundreds = hundreds.toString();
+  hundreds = hundreds.split('.')[1];
+  hundreds = hundreds.substring(0,3);
+  time = seconds + ":" + hundreds;
+  times.push(time);
+  t0 = performance.now();
 }
