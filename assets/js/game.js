@@ -1,6 +1,6 @@
 import { dataset } from "../data/dataset.js";
-import { getCategory } from "./functions/functions.js"
-import { getParams } from "./functions/functions.js"
+import { getCategory } from "./functions/functions.js";
+import { getParams } from "./functions/functions.js";
 
 let results = newPair();
 //To ensure that player doesnt answer same question twice
@@ -61,20 +61,33 @@ function result() {
  */
 function newPair() {
   let gameDifficult = getParams()[0];
-  let gameCategory = getParams()[1]
+  let gameCategory = getParams()[1];
   let datasetLength;
   let randomData;
   let image;
   let word;
   let pair = [];
 
-  console.log(dataset.data[gameDifficult][getCategory(dataset.data[gameDifficult], gameCategory)]);
-  datasetLength = dataset.data[gameDifficult][getCategory(dataset.data[gameDifficult], gameCategory)].questions.length;
+  console.log(
+    dataset.data[gameDifficult][
+      getCategory(dataset.data[gameDifficult], gameCategory)
+    ]
+  );
+  datasetLength =
+    dataset.data[gameDifficult][
+      getCategory(dataset.data[gameDifficult], gameCategory)
+    ].questions.length;
   randomData = Math.floor(Math.random() * (datasetLength - 1 - 1 + 1)) + 1;
-  image = dataset.data[gameDifficult][getCategory(dataset.data[gameDifficult], gameCategory)].questions[randomData].picture
-  word = dataset.data[gameDifficult][getCategory(dataset.data[gameDifficult], gameCategory)].questions[randomData].word
-  pair.push(image)
-  pair.push(word)
+  image =
+    dataset.data[gameDifficult][
+      getCategory(dataset.data[gameDifficult], gameCategory)
+    ].questions[randomData].picture;
+  word =
+    dataset.data[gameDifficult][
+      getCategory(dataset.data[gameDifficult], gameCategory)
+    ].questions[randomData].word;
+  pair.push(image);
+  pair.push(word);
 
   return pair;
 }
@@ -134,65 +147,66 @@ function showLetters() {
 }
 
 var answeredWord;
-var score=0;
-var attempt=0;
+var score = 0;
+var attempt = 0;
 var RightOrWrongArnswer;
 var t0 = performance.now();
 var t1;
-function readAnswer(){
-  answeredQuestions++;
-
+function readAnswer() {
   if (answeredQuestions === maxQuestions) {
     learningAnalytics();
     endGame();
   }
-
+  answeredQuestions++;
   $("input").on("keydown", function search(e) {
     if (e.keyCode == 13) {
       answeredWord = "";
       for (var i = 0; i < word.length; i++) {
         answeredWord = answeredWord + document.getElementById(i).value;
       }
-      if(word==answeredWord){
-        document.getElementById("counter").innerHTML = answeredQuestions + "/10";
+      if (word == answeredWord) {
+        document.getElementById("counter").innerHTML =
+          answeredQuestions + "/10";
         answers.push(true);
         RightOrWrongArnswer = true;
         rightOrWrong(RightOrWrongArnswer);
-        
-        answeredWords.push(answeredWord);
-        correctWords.push(word);
-        t1 = performance.now();
-        setTimeout(function () { nextQuestion();}, 1500);
-        score+=1;
-        attempt+=1;
-        
-      }
-      else{
-        document.getElementById("counter").innerHTML = answeredQuestions + "/10";
-        answers.push(false);
-        RightOrWrongArnswer = false;
-        rightOrWrong(RightOrWrongArnswer,word);
 
         answeredWords.push(answeredWord);
         correctWords.push(word);
         t1 = performance.now();
-        setTimeout(function () { nextQuestion();}, 2000);
-        attempt+=1;
+        setTimeout(function () {
+          nextQuestion();
+        }, 1500);
+        score += 1;
+        attempt += 1;
+      } else {
+        document.getElementById("counter").innerHTML =
+          answeredQuestions + "/10";
+        answers.push(false);
+        RightOrWrongArnswer = false;
+        rightOrWrong(RightOrWrongArnswer, word);
+
+        answeredWords.push(answeredWord);
+        correctWords.push(word);
+        t1 = performance.now();
+        setTimeout(function () {
+          nextQuestion();
+        }, 2000);
+        attempt += 1;
       }
       if (attempt == 10) {
         alert("Nice work! You got " + score + "/" + attempt + " points!");
         score = 0;
         attempt = 0;
       }
-      
-  }
-});
+    }
+  });
 }
 
 readAnswer();
-function nextQuestion(){
+function nextQuestion() {
   timing();
-  var inputs = document.getElementsByTagName('input');
+  var inputs = document.getElementsByTagName("input");
   while (inputs.length) inputs[0].parentNode.removeChild(inputs[0]);
 
   results = newPair();
@@ -209,31 +223,33 @@ function nextQuestion(){
   readAnswer();
 }
 
-function rightOrWrong(RightOrWrongArnswer,word){
+function rightOrWrong(RightOrWrongArnswer, word) {
   var message = document.createElement("P");
   var timeOut = 0;
-  if(RightOrWrongArnswer==true){
+  if (RightOrWrongArnswer == true) {
     message.innerText = "Right answer!";
     message.style.color = "green";
     message.style.fontWeight = "bold";
     timeOut = 1500;
-  }
-  else if(RightOrWrongArnswer==false){
-    message.innerText = "Wrong answer! \n Right answer is: "+ word;
+  } else if (RightOrWrongArnswer == false) {
+    message.innerText = "Wrong answer! \n Right answer is: " + word;
     message.style.color = "red";
     message.style.fontWeight = "bold";
     timeOut = 2000;
-  } 
+  }
 
   let wordHolder = document.getElementById("hold");
   let correct = document.createElement("li");
+  correct.id = "my-word"
   wordHolder.innerHTML = "";
   wordHolder.appendChild(correct);
   correct.appendChild(message);
-  setTimeout(function () { message.remove()}, timeOut);
+  setTimeout(function () {
+    message.remove();
+  }, timeOut);
 }
 
-function learningAnalytics(){
+function learningAnalytics() {
   var ul = document.createElement("ul");
   var li = document.createElement("li");
   ul.innerText = "Right answers:";
@@ -246,26 +262,25 @@ function learningAnalytics(){
   /*correct.appendChild(ul);
   correct.appendChild(li);*/
 
-  var testing = ['test1','test2','test3'];
-  var ul=document.createElement('UL');
-    for(var i=0;i<testing.length;i++)
-    {
-      var li=document.createElement('LI');
-      li.appendChild(document.createTextNode(answeredWords[i]));
-      li.appendChild(document.createTextNode(correctWords[i]));
-      li.appendChild(document.createTextNode(times[i]));
-      ul.appendChild(li);
-    }
-    correct.appendChild(ul);
+  var testing = ["test1", "test2", "test3"];
+  var ul = document.createElement("UL");
+  for (var i = 0; i < testing.length; i++) {
+    var li = document.createElement("LI");
+    li.appendChild(document.createTextNode(answeredWords[i]));
+    li.appendChild(document.createTextNode(correctWords[i]));
+    li.appendChild(document.createTextNode(times[i]));
+    ul.appendChild(li);
+  }
+  correct.appendChild(ul);
 }
 
-function timing(){
-  var time = t1-t0;
-  var seconds = Math.floor(time/1000);
-  var hundreds = time/1000-seconds;
+function timing() {
+  var time = t1 - t0;
+  var seconds = Math.floor(time / 1000);
+  var hundreds = time / 1000 - seconds;
   hundreds = hundreds.toString();
-  hundreds = hundreds.split('.')[1];
-  hundreds = hundreds.substring(0,3);
+  hundreds = hundreds.split(".")[1];
+  hundreds = hundreds.substring(0, 3);
   time = seconds + ":" + hundreds;
   times.push(time);
   t0 = performance.now();
