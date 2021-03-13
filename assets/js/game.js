@@ -173,6 +173,9 @@ function showLetters(){
 }
 
 var answeredWord;
+var score=0;
+var attempt=0;
+
 function readAnswer(){
   
   $("input").on("keydown",function search(e) {
@@ -182,16 +185,25 @@ function readAnswer(){
         answeredWord=answeredWord+document.getElementById(i).value;
       }
       if(word==answeredWord){
-        alert("Right answer! :)");
+        //alert("Right answer! :)");
         nextQuestion();
+        score+=1;
+        attempt+=1;
       }
       else{
-        alert("Wrong answer.. :(");
+        //alert("Wrong answer.. :(");
         nextQuestion();
+        attempt+=1;
+      }
+      if(attempt == 10){
+        alert("Nice work! You got "+score+"/"+attempt+" points!");
+        score = 0;
+        attempt = 0;
       }
   }
 });
 }
+
 readAnswer();
 function nextQuestion(){
   var inputs = document.getElementsByTagName('input');
