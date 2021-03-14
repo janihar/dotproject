@@ -14,7 +14,7 @@ var randomLetters = [];
 
 //To track how many question user has been answered. Default 1
 var answeredQuestions = 1;
-const maxQuestions = 10;
+const maxQuestions = 4;
 
 //To track how many answers were correct or wrong
 
@@ -195,7 +195,6 @@ function readAnswer() {
         attempt += 1;
       }
       if (attempt == 10) {
-        alert("Nice work! You got " + score + "/" + attempt + " points!");
         score = 0;
         attempt = 0;
       }
@@ -249,38 +248,85 @@ function rightOrWrong(RightOrWrongArnswer, word) {
   }, timeOut);
 }
 
+var t;
 function learningAnalytics() {
-  var ul = document.createElement("ul");
-  var li = document.createElement("li");
-  ul.innerText = "Right answers:";
-  li.innerText = "test";
   let wordHolder = document.getElementById("hold");
-  let correct = document.createElement("li");
+  let correct = document.createElement("table");
+  document.getElementById("counter").style.display="none";
+  document.getElementById("results").style.display="block";
+  document.getElementById("gamepicture").style.display="none";
   wordHolder.innerHTML = "";
-  correct.innerHTML = "";
   wordHolder.appendChild(correct);
-  /*correct.appendChild(ul);
-  correct.appendChild(li);*/
+  t = document.createElement('table');
 
-  var testing = ["test1", "test2", "test3"];
-  var ul = document.createElement("UL");
-  for (var i = 0; i < testing.length; i++) {
-    var li = document.createElement("LI");
-    li.appendChild(document.createTextNode(answeredWords[i]));
-    li.appendChild(document.createTextNode(correctWords[i]));
-    li.appendChild(document.createTextNode(times[i]));
-    ul.appendChild(li);
+  t.setAttribute("class", "table table-striped");
+
+  document.getElementById("score").innerHTML="You got " + score+"/10 points";
+  document.getElementById("score").style.display="block";
+
+  document.getElementById("testingForm").style.height="800px";
+
+  var r = t.insertRow(0);
+  var c = r.insertCell(0);
+  c.innerHTML="";
+  c=r.insertCell(1);
+  c.innerHTML="Answer";
+  c=r.insertCell(2);
+  c.innerHTML="Correct";
+  c=r.insertCell(3);
+  c.innerHTML="Time (s)";
+  
+  for (var i = 0; i < answeredWords.length; i++) {
+    r = t.insertRow(i+1);
+    c = r.insertCell(0);
+    c.innerHTML=i+1;
+    c = r.insertCell(1);
+    if(answeredWords[i]==correctWords[i]){
+      c.style.color="green";
+    }
+    else{
+      c.style.color="red";
+    }
+    c.innerHTML = answeredWords[i];
+    c = r.insertCell(2);
+    c.innerHTML = correctWords[i];
+    c = r.insertCell(3);
+    c.innerHTML =times[i];
+    correct.appendChild(t);
   }
-  correct.appendChild(ul);
+
+  var backToMenuBtn = document.createElement("button");
+  var newGameBtn= document.createElement("button");
+  backToMenuBtn.innerText="Back to Menu"
+  newGameBtn.innerText="New game";
+  correct.appendChild(newGameBtn);
+  correct.appendChild(backToMenuBtn);
+  newGameBtn.onclick=function(){refreshPage();};
+  
 }
 
+//var timesForCompare=['0'];
+
+function refreshPage(){
+  alert(/*"It looks like the most difficult word was "+correctWords[times.indexOf(maxTime)]*/);
+}
+//var maxTime;
 function timing() {
   var time = t1 - t0;
   var seconds = Math.floor(time / 1000);
   var hundreds = time / 1000 - seconds;
   hundreds = hundreds.toString();
   hundreds = hundreds.split(".")[1];
-  hundreds = hundreds.substring(0, 3);
+  hundreds = hundreds.substring(0, 2);
+  /*if(time>timesForCompare[0]){
+    timesForCompare.pop();
+    timesForCompare.push(time);
+    time = seconds + ":" + hundreds;
+    maxTime=time;
+  }
+  else{
+  time = seconds + ":" + hundreds;
+  }*/
   time = seconds + ":" + hundreds;
   times.push(time);
   t0 = performance.now();
