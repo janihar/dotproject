@@ -133,6 +133,56 @@ export var dataset = {
           },
         ],
       },
+      {
+        category: "countries",
+        questions: [
+          {
+            picture: "images/intermediate/countries/finland.png",
+            word: "finland",
+          },
+          {
+            picture: "images/intermediate/countries/åland.png",
+            word: "åland",
+          },
+          {
+            picture: "images/intermediate/countries/denmark.png",
+            word: "denmark",
+          },
+          {
+            picture: "images/intermediate/countries/england.jpg",
+            word: "england",
+          },
+          {
+            picture: "images/intermediate/countries/estonian.png",
+            word: "estonian",
+          },
+          {
+            picture: "images/intermediate/countries/germany.png",
+            word: "germany",
+          },
+          {
+            picture: "images/intermediate/countries/iceland.png",
+            word: "iceland",
+          },
+          {
+            picture: "images/intermediate/countries/ireland.png",
+            word: "ireland",
+          },
+          {
+            picture: "images/intermediate/countries/norway.png",
+            word: "norway",
+          },
+          {
+            picture: "images/intermediate/countries/russia.png",
+            word: "russia",
+          },
+          {
+            picture: "images/intermediate/countries/sweden.png",
+            word: "sweden",
+          },
+        ],
+      },
+      
     ],
     easy: [
       {
