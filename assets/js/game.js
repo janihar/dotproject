@@ -16,6 +16,7 @@ var randomLetters = [];
 //To track how many question user has been answered. Default 1
 var answeredQuestions = 1;
 let maxQuestions = config.configuration.maxQuestions;
+maxQuestions=3;
 document.getElementById("counter").innerHTML = answeredQuestions + "/" + maxQuestions;
 
 //To track how many answers were correct or wrong
@@ -204,6 +205,18 @@ function readAnswer() {
   });
 }
 
+//--------------------------
+/*document.addEventListener('keydown', function(e){
+  if(e.keyCode == 37){
+    $("input:enabled").prev().focus();
+  }
+  if(e.keyCode == 39){
+    $("input:enabled").next().focus();
+  }
+});*/
+//--------------------------
+
+
 readAnswer();
 function nextQuestion() {
   timing();
@@ -254,6 +267,7 @@ var t;
 function learningAnalytics() {
   let wordHolder = document.getElementById("hold");
   let correct = document.createElement("table");
+  correct.style.textAlign="center";
   document.getElementById("counter").style.display = "none";
   document.getElementById("results").style.display = "block";
   document.getElementById("gamepicture").style.display = "none";
@@ -297,22 +311,33 @@ function learningAnalytics() {
     correct.appendChild(t);
   }
 
-  var backToMenuBtn = document.createElement("button");
-  var newGameBtn = document.createElement("button");
-  backToMenuBtn.innerText = "Back to Menu";
-  newGameBtn.innerText = "New game";
-  correct.appendChild(newGameBtn);
-  correct.appendChild(backToMenuBtn);
-  newGameBtn.onclick = function () {
-    refreshPage();
-  };
+  var node = document.createElement("LI");
+  node.style.listStyleType="none";
+  var button1 = document.createElement("a");
+  var button2 = document.createElement("a");
+  buttonStyles(button1);
+  buttonStyles(button2);
+  button1.href = window.location; 
+  button2.href="index.html";
+  button1.innerText="New game";
+  button2.innerText="Back to menu";
+  node.appendChild(button1);
+  node.appendChild(button2);
+  correct.appendChild(node);
+}
+
+function buttonStyles(button){
+  button.style.border= "1px solid #000";
+  button.style.background = "#4E9CAF";
+  button.style.color="white";
+  button.style.textDecoration="none";
+  button.style.padding="10px";
+  button.style.borderRadius="5px";
+  button.style.fontWeight="bold";
+  button.style.marginLeft="5px";
 }
 
 //var timesForCompare=['0'];
-
-function refreshPage() {
-  alert(/*"It looks like the most difficult word was "+correctWords[times.indexOf(maxTime)]*/);
-}
 //var maxTime;
 function timing() {
   var time = t1 - t0;
