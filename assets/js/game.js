@@ -16,8 +16,9 @@ var randomLetters = [];
 //To track how many question user has been answered. Default 1
 var answeredQuestions = 1;
 let maxQuestions = config.configuration.maxQuestions;
-maxQuestions=3;
-document.getElementById("counter").innerHTML = answeredQuestions + "/" + maxQuestions;
+maxQuestions = 3;
+document.getElementById("counter").innerHTML =
+  answeredQuestions + "/" + maxQuestions;
 
 //To track how many answers were correct or wrong
 
@@ -156,11 +157,12 @@ var RightOrWrongArnswer;
 var t0 = performance.now();
 var t1;
 function readAnswer() {
-  if (answeredQuestions === maxQuestions) {
+  if (answeredQuestions > maxQuestions) {
     learningAnalytics();
-    endGame();
+    //endGame();
   }
   answeredQuestions++;
+
   $("input").on("keydown", function search(e) {
     if (e.keyCode == 13) {
       answeredWord = "";
@@ -168,8 +170,11 @@ function readAnswer() {
         answeredWord = answeredWord + document.getElementById(i).value;
       }
       if (word == answeredWord) {
-        document.getElementById("counter").innerHTML =
-          answeredQuestions + "/" + maxQuestions;
+        if (answeredQuestions <= maxQuestions) {
+          document.getElementById("counter").innerHTML =
+            answeredQuestions + "/" + maxQuestions;
+        }
+
         answers.push(true);
         RightOrWrongArnswer = true;
         rightOrWrong(RightOrWrongArnswer);
@@ -183,8 +188,10 @@ function readAnswer() {
         score += 1;
         attempt += 1;
       } else {
-        document.getElementById("counter").innerHTML =
-          answeredQuestions + "/" + maxQuestions;
+        if (answeredQuestions <= maxQuestions) {
+          document.getElementById("counter").innerHTML =
+            answeredQuestions + "/" + maxQuestions;
+        }
         answers.push(false);
         RightOrWrongArnswer = false;
         rightOrWrong(RightOrWrongArnswer, word);
@@ -215,7 +222,6 @@ function readAnswer() {
   }
 });*/
 //--------------------------
-
 
 readAnswer();
 function nextQuestion() {
@@ -267,7 +273,7 @@ var t;
 function learningAnalytics() {
   let wordHolder = document.getElementById("hold");
   let correct = document.createElement("table");
-  correct.style.textAlign="center";
+  correct.style.textAlign = "center";
   document.getElementById("counter").style.display = "none";
   document.getElementById("results").style.display = "block";
   document.getElementById("gamepicture").style.display = "none";
@@ -312,29 +318,29 @@ function learningAnalytics() {
   }
 
   var node = document.createElement("LI");
-  node.style.listStyleType="none";
+  node.style.listStyleType = "none";
   var button1 = document.createElement("a");
   var button2 = document.createElement("a");
   buttonStyles(button1);
   buttonStyles(button2);
-  button1.href = window.location; 
-  button2.href="index.html";
-  button1.innerText="New game";
-  button2.innerText="Back to menu";
+  button1.href = window.location;
+  button2.href = "index.html";
+  button1.innerText = "New game";
+  button2.innerText = "Back to menu";
   node.appendChild(button1);
   node.appendChild(button2);
   correct.appendChild(node);
 }
 
-function buttonStyles(button){
-  button.style.border= "1px solid #000";
+function buttonStyles(button) {
+  button.style.border = "1px solid #000";
   button.style.background = "#4E9CAF";
-  button.style.color="white";
-  button.style.textDecoration="none";
-  button.style.padding="10px";
-  button.style.borderRadius="5px";
-  button.style.fontWeight="bold";
-  button.style.marginLeft="5px";
+  button.style.color = "white";
+  button.style.textDecoration = "none";
+  button.style.padding = "10px";
+  button.style.borderRadius = "5px";
+  button.style.fontWeight = "bold";
+  button.style.marginLeft = "5px";
 }
 
 //var timesForCompare=['0'];
