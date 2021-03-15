@@ -154,7 +154,7 @@ export var dataset = {
           },
           {
             picture: "images/intermediate/countries/estonian.png",
-            word: "estonian",
+            word: "estonia",
           },
           {
             picture: "images/intermediate/countries/germany.png",
