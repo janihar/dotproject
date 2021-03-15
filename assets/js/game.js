@@ -245,6 +245,7 @@ function nextQuestion() {
   result();
   activateInputs();
   readAnswer();
+  vafan();
 }
 
 function rightOrWrong(RightOrWrongArnswer, word) {
