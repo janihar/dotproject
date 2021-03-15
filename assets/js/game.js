@@ -213,14 +213,18 @@ function readAnswer() {
 }
 
 //--------------------------
-/*document.addEventListener('keydown', function(e){
-  if(e.keyCode == 37){
-    $("input:enabled").prev().focus();
+function vafan(){
+  $('input').keydown(function(e) {
+    var elementti = $(this);
+    if ((e.which == 37)) {
+      elementti.prevAll('input:enabled').first().focus();
+    }
+    if ((e.which == 39)) {
+      elementti.nextAll('input:enabled').first().focus();
   }
-  if(e.keyCode == 39){
-    $("input:enabled").next().focus();
-  }
-});*/
+  });
+}
+vafan();
 //--------------------------
 
 readAnswer();
