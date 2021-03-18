@@ -203,10 +203,7 @@ function readAnswer() {
         }, 2000);
         attempt += 1;
       }
-      if (attempt == 10) {
-        score = 0;
-        attempt = 0;
-      }
+     
     }
   });
 }
