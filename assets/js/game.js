@@ -16,7 +16,6 @@ var randomLetters = [];
 //To track how many question user has been answered. Default 1
 var answeredQuestions = 1;
 let maxQuestions = config.configuration.maxQuestions;
-maxQuestions = 3;
 document.getElementById("counter").innerHTML =
   answeredQuestions + "/" + maxQuestions;
 
