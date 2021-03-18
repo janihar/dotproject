@@ -122,13 +122,13 @@ function showLetters() {
     letters.push(word.charAt(i));
 
     if (getParams()[0] == "easy") {
-      difficultyLevel = 0.7;
+      difficultyLevel = config.configuration.difficultEasy;
     } else if (getParams()[0] == "intermediate") {
-      difficultyLevel = 0.5;
+      difficultyLevel = config.configuration.difficultIntermediate;
     } else if (getParams()[0] == "hard") {
-      difficultyLevel = 0.25;
+      difficultyLevel = config.configuration.difficultHard;
     } else if (getParams()[0] == "advanced") {
-      difficultyLevel = 0.1;
+      difficultyLevel = config.configuration.difficultAdvanced;
     }
 
     var randomLength = Math.round(word.length * difficultyLevel);
